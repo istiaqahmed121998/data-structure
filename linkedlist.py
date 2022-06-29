@@ -124,14 +124,16 @@ class LinkedList:
         :param elem: the element to search for
         :return: a boolean value.
         """
-        tail = self.head
+        curr = self.head
         i = 0
-        while tail is not None:
-            if tail.element == elem:
+        while curr is not None:
+            if curr.element == elem:
                 return True
-            tail = tail.next
+
+            curr = curr.next
             i += 1
         return False
+
 
 if __name__ == "__main__":
     a1 = [10, 20, 30, 40]
