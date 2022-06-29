@@ -235,7 +235,7 @@ class LinkedList:
         if mod != 0:
             while tail.next is not None:
                 count += 1
-                if count < self.count_node()-mod:
+                if count < self.count_node() - mod:
                     curr = curr.next
                 tail = tail.next
             kthhead = curr.next
@@ -244,12 +244,112 @@ class LinkedList:
             self.head = kthhead
 
 
+class CLinkedList:
+    def __init__(self, arr):
+        """
+        If the input is a list, then create a new linked list with the elements of the list. If the input is a node, then
+        create a new linked list with the node as the head
+
+        :param arr: This is the array that you want to convert into a linked list
+        """
+        if type(arr) == list:
+            self.head = Node(arr[0], None)
+            tail = self.head
+            for i in range(1, len(arr)):
+                temp = Node(arr[i], None)
+                tail.next = temp
+                tail = tail.next
+            tail.next = self.head
+        elif type(arr) == Node:
+            self.head = arr
+
+    def count_node(self):
+        curr = self.head
+        count = 0
+        if self.head is None:
+            return count
+        while True:
+            curr = curr.next
+            count += 1
+            if curr == self.head:
+                break
+        return count
+
+    def print_list(self):
+        curr = self.head
+        if self.head is None:
+            return
+        while True:
+            print(curr.element, end=", ")
+            curr = curr.next
+            if curr == self.head:
+                break
+        print('')
+
+    def insert(self, elem, pos):
+        """
+        If the position is valid, create a new node, and if the position is 0, set the new node's next to the head, and set
+        the head to the new node, otherwise, iterate through the list until you reach the position, and set the new node's
+        next to the current node, and set the previous node's next to the new node
+
+        :param elem: The element to be inserted
+        :param pos: The position where the new node is to be inserted
+        :return: The new node is being returned.
+        """
+        if 0 <= pos <= self.count_node():
+            new_node = Node(elem, None)
+            if pos == 0:
+                new_node.next = self.head
+                self.head = new_node
+            else:
+                count = 0
+                curr = self.head
+                tail = None
+                while curr is not None and count < pos:
+                    count += 1
+                    tail = curr
+                    curr = curr.next
+                tail.next = new_node
+                new_node.next = curr
+        else:
+            print('Invalid Index')
+            return
+
+    def delete(self, pos):
+        """
+        We start at the head, and traverse the list until we reach the node at the position we want to delete.
+
+        We then set the previous node's next pointer to the node after the one we want to delete.
+
+        We then delete the node we want to delete.
+
+        :param pos: The position of the node to be deleted
+        :return: the value of the node at the given position.
+        """
+        if 0 <= pos < self.count_node():
+            if pos == 0:
+                curr = self.head
+                while curr.next != self.head:
+                    curr = curr.next
+                curr.next = self.head.next
+                self.head = self.head.next
+            else:
+                curr = self.head
+                count = 0
+                while curr is not None and count < pos:
+                    count += 1
+                    tail = curr
+                    curr = curr.next
+                tail.next = curr.next
+        else:
+            print('Invalid Index')
+            return
+
+
 if __name__ == "__main__":
     a1 = [10, 20, 30, 40, 50, 60]
-    h1 = LinkedList(a1)
-    h1.insert(2, 4)
+    h1 = CLinkedList(a1)
+    h1.insert(70, 6)
     h1.print_list()
-    h1.delete(4)
-    h1.print_list()
-    h1.rotate_right(2)
+    h1.delete(6)
     h1.print_list()
