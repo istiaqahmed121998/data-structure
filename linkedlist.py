@@ -134,7 +134,60 @@ class LinkedList:
             i += 1
         return False
 
+    def insert(self, elem, pos):
+        """
+        If the position is valid, create a new node, and if the position is 0, set the new node's next to the head, and set
+        the head to the new node, otherwise, iterate through the list until you reach the position, and set the new node's
+        next to the current node, and set the previous node's next to the new node
+
+        :param elem: The element to be inserted
+        :param pos: The position where the new node is to be inserted
+        :return: the number of nodes in the linked list.
+        """
+        if 0 <= pos <= self.count_node():
+            new_node = Node(elem, None)
+            if pos == 0:
+                new_node.next = self.head
+                self.head = new_node
+            else:
+                count = 0
+                curr = self.head
+                tail = None
+                while curr is not None and count < pos:
+                    count += 1
+                    tail = curr
+                    curr = curr.next
+                tail.next = new_node
+                new_node.next = curr
+        else:
+            print('Invalid Index')
+            return
+
+    def delete(self, pos):
+        """
+        If the position is valid, then if the position is 0, set the head to the next node, otherwise, iterate through the
+        list until the position is reached, and set the previous node's next to the current node's next
+
+        :param pos: The position of the node to be deleted
+        """
+        if 0 <= pos < self.count_node():
+            if pos == 0:
+                self.head = self.head.next
+            else:
+                curr = self.head
+                count = 0
+                while curr is not None and count < pos:
+                    count += 1
+                    tail = curr
+                    curr = curr.next
+                tail.next = curr.next
+
+
 
 if __name__ == "__main__":
     a1 = [10, 20, 30, 40]
     h1 = LinkedList(a1)
+    h1.insert(2, 4)
+    h1.print_list()
+    h1.delete(4)
+    h1.print_list()
