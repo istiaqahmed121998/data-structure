@@ -165,10 +165,11 @@ class LinkedList:
 
     def delete(self, pos):
         """
-        If the position is valid, then if the position is 0, set the head to the next node, otherwise, iterate through the
-        list until the position is reached, and set the previous node's next to the current node's next
+        If the position is valid, then we traverse the list until we reach the position, and then we delete the node at that
+        position
 
         :param pos: The position of the node to be deleted
+        :return: The value of the node at the given position.
         """
         if 0 <= pos < self.count_node():
             if pos == 0:
@@ -181,13 +182,62 @@ class LinkedList:
                     tail = curr
                     curr = curr.next
                 tail.next = curr.next
+        else:
+            print('Invalid Index')
+            return
 
+    def reverse(self):
+        """
+        We are reversing the pointer direction of each node in the linked list
+        """
+        curr = self.head
+        prev = None
+        while curr is not None:
+            next = curr.next
+            curr.next = prev
+            prev = curr
+            curr = next
+        self.head = prev
+
+    def rotate_left(self, k):
+        mod = k % 4
+        curr = self.head
+        tail = self.head
+        count = 0
+        if mod != 0:
+            while tail.next is not None:
+                count += 1
+                if count < mod:
+                    curr = curr.next
+                tail = tail.next
+            kthhead = curr.next
+            curr.next = None
+            tail.next = self.head
+            self.head = kthhead
+
+    def rotate_right(self, k):
+        mod = k % 4
+        curr = self.head
+        tail = self.head
+        count = 0
+        if mod != 0:
+            while tail.next is not None:
+                count += 1
+                if count < self.count_node()-mod:
+                    curr = curr.next
+                tail = tail.next
+            kthhead = curr.next
+            curr.next = None
+            tail.next = self.head
+            self.head = kthhead
 
 
 if __name__ == "__main__":
-    a1 = [10, 20, 30, 40]
+    a1 = [10, 20, 30, 40, 50, 60]
     h1 = LinkedList(a1)
     h1.insert(2, 4)
     h1.print_list()
     h1.delete(4)
+    h1.print_list()
+    h1.rotate_right(2)
     h1.print_list()
