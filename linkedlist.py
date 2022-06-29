@@ -200,6 +200,12 @@ class LinkedList:
         self.head = prev
 
     def rotate_left(self, k):
+        """
+        We find the kth node from the end of the linked list, and then we set the next of the kth node to None, and then we
+        set the next of the last node to the head of the linked list
+
+        :param k: the number of times we want to rotate the list
+        """
         mod = k % 4
         curr = self.head
         tail = self.head
@@ -216,6 +222,12 @@ class LinkedList:
             self.head = kthhead
 
     def rotate_right(self, k):
+        """
+        We find the kth node from the end of the linked list, and then we make the next node of the kth node the new head of
+        the linked list
+
+        :param k: the number of times you want to rotate the linked list
+        """
         mod = k % 4
         curr = self.head
         tail = self.head
