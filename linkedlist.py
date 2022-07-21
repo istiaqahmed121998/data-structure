@@ -199,6 +199,13 @@ class LinkedList:
             curr = next
         self.head = prev
 
+    @staticmethod
+    def recursive_reversed_print(head):
+        if head is None:
+            return None
+        print(head.element, end=',')
+        return self.recursive_reversed_print(head.next)
+
     def rotate_left(self, k):
         """
         We find the kth node from the end of the linked list, and then we set the next of the kth node to None, and then we
@@ -349,7 +356,4 @@ class CLinkedList:
 if __name__ == "__main__":
     a1 = [10, 20, 30, 40, 50, 60]
     h1 = CLinkedList(a1)
-    h1.insert(70, 6)
-    h1.print_list()
-    h1.delete(6)
-    h1.print_list()
+    h1.recursive_reversed_print(h1.head)
